@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc && node src/index.js",
+    "dev": "ts-node-dev src/index.ts",
     "run": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +21,7 @@
   "devDependencies": {
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "ts-node-dev": "^1.0.0",
     "typescript": "^4.0.5"
   }
 }
