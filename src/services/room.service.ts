@@ -1,6 +1,6 @@
 export interface Room {
   width?: number;
-  dept?: number;
+  depth?: number;
 }
 
 export class RoomService {
