@@ -70,7 +70,11 @@ export class Server {
     });
   }
 
-  listen(port: string) {
+  listen(port: string): void {
     this.server.listen(port);
+  }
+
+  close(): void {
+    this.server.close();
   }
 }

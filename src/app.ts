@@ -1,9 +1,9 @@
 import { Server } from './server';
 import { Room, RoomService } from './services/room.service';
 
-const roomService = new RoomService();
+export const roomService = new RoomService();
 
-export async function createApp() {
+export async function createApp(port = '3030') {
   const server = new Server();
 
   server.addRoute('robot', 'GET', (req, res) => {
@@ -19,8 +19,11 @@ export async function createApp() {
     }
 
     const updatedRoom = roomService.update(req.body as Room);
-    res.end(JSON.stringify(updatedRoom));
+    res.setHeader('Content-Type', 'application/json');
+    res.write(JSON.stringify(updatedRoom));
+    res.end();
   });
 
-  server.listen('3030');
+  server.listen(port);
+  return server;
 }

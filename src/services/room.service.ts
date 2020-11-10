@@ -13,4 +13,8 @@ export class RoomService {
     this.room = room;
     return room;
   }
+
+  get() {
+    return this.room;
+  }
 }
