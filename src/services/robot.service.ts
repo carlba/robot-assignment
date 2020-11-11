@@ -25,6 +25,26 @@ export class RobotService {
     return { ...this.robot };
   }
 
+  moveLeft(robot: Robot) {
+    robot.orientation = degreesToCardinal(cardinalToDegrees(robot.orientation!) - 90);
+  }
+
+  moveRight(robot: Robot) {
+    robot.orientation = degreesToCardinal(cardinalToDegrees(robot.orientation!) + 90);
+  }
+
+  moveForward(robot: Robot, bbox: BoundingBox) {
+    if (robot.orientation === Orientation.NORTH && bbox.inBounds(robot.x, robot.y - 1)) {
+      robot.y -= 1;
+    } else if (robot.orientation === Orientation.EAST && bbox.inBounds(robot.x + 1, robot.y)) {
+      robot.x += 1;
+    } else if (robot.orientation === Orientation.SOUTH && bbox.inBounds(robot.x, robot.y + 1)) {
+      robot.y += 1;
+    } else if (robot.orientation === Orientation.WEST && bbox.inBounds(robot.x - 1, robot.y)) {
+      robot.x -= 1;
+    }
+  }
+
   move(directions: string) {
     const currentRobot = this.get();
     const currentRoom = this.roomService.get();
@@ -32,35 +52,11 @@ export class RobotService {
 
     for (const direction of directions) {
       if (direction === 'L') {
-        currentRobot.orientation = degreesToCardinal(
-          cardinalToDegrees(currentRobot.orientation!) - 90
-        );
+        this.moveLeft(currentRobot);
       } else if (direction === 'R') {
-        currentRobot.orientation = degreesToCardinal(
-          cardinalToDegrees(currentRobot.orientation!) + 90
-        );
+        this.moveRight(currentRobot);
       } else if (direction === 'F') {
-        if (
-          currentRobot.orientation === Orientation.NORTH &&
-          bbox.inBounds(currentRobot.x, currentRobot.y - 1)
-        ) {
-          currentRobot.y -= 1;
-        } else if (
-          currentRobot.orientation === Orientation.EAST &&
-          bbox.inBounds(currentRobot.x + 1, currentRobot.y)
-        ) {
-          currentRobot.x += 1;
-        } else if (
-          currentRobot.orientation === Orientation.SOUTH &&
-          bbox.inBounds(currentRobot.x, currentRobot.y + 1)
-        ) {
-          currentRobot.y += 1;
-        } else if (
-          currentRobot.orientation === Orientation.WEST &&
-          bbox.inBounds(currentRobot.x - 1, currentRobot.y)
-        ) {
-          currentRobot.x -= 1;
-        }
+        this.moveForward(currentRobot, bbox);
       }
     }
     return this.update(currentRobot);

@@ -19,7 +19,7 @@ settingsFormElement.addEventListener('submit', async event => {
 
   await updateRoom(gridSize, gridSize);
   await updateRobot(startX, startY, startOrientation);
-  positionRobot(x, y, startOrientation);
+  positionRobot(startX, startY, startOrientation);
   lastFormData = { gridSize };
 });
 
@@ -64,9 +64,8 @@ function positionRobot(x, y, orientation) {
   const degrees = cardinalToDegrees(orientation);
   robot.setAttribute('data-rotate', `${degrees}deg`);
 
-  const element = grid[x][y];
-  if (element) {
-    element.appendChild(robot);
+  if (grid && grid[x] && grid[x][y]) {
+    grid[x][y].appendChild(robot);
   }
 }
 

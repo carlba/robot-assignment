@@ -16,9 +16,7 @@ export class Server {
 
     const handler =
       typeof url === 'string'
-        ? this.handlers.find(
-            handler => this.trimLocation(url).startsWith(handler.path) && method === handler.method
-          )
+        ? this.handlers.find(handler => url.startsWith(handler.path) && method === handler.method)
         : null;
 
     if (handler && ['POST', 'PUT', 'PATCH'].includes(handler.method)) {
@@ -31,7 +29,7 @@ export class Server {
       }
     }
 
-    console.log({ url, method, body: req.body });
+    // console.log({ url, method, body: req.body });
 
     if (handler) {
       return handler.handler(req, res);
