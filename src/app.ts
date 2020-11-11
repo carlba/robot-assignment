@@ -38,6 +38,18 @@ export async function createApp(port = '3030') {
     res.end();
   });
 
+  server.addRoute('api/robot/actions', 'POST', (req, res) => {
+    if (!req.body?.type || !req.body?.params) {
+      res.statusCode = 422;
+      return res.end('Missing type, params in body');
+    }
+
+    const updatedRobot = robotService.move(req.body.params);
+    res.setHeader('Content-Type', 'application/json');
+    res.write(JSON.stringify(updatedRobot));
+    res.end();
+  });
+
   server.listen(port);
   return server;
 }

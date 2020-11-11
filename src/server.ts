@@ -21,7 +21,7 @@ export class Server {
           )
         : null;
 
-    if (['POST', 'PUT', 'PATCH'].includes(handler.method)) {
+    if (handler && ['POST', 'PUT', 'PATCH'].includes(handler.method)) {
       try {
         req.body = await this.getParsedJsonFromRequest(req);
       } catch (e) {
