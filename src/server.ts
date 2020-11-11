@@ -17,7 +17,7 @@ export class Server {
     const handler =
       typeof url === 'string'
         ? this.handlers.find(
-            handler => this.trimLocation(url) === handler.path && method === handler.method
+            handler => this.trimLocation(url).startsWith(handler.path) && method === handler.method
           )
         : null;
 
@@ -30,6 +30,8 @@ export class Server {
         res.end();
       }
     }
+
+    console.log({ url, method, body: req.body });
 
     if (handler) {
       return handler.handler(req, res);

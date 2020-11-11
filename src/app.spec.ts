@@ -5,7 +5,7 @@ import { Orientation } from './lib/math';
 import { Robot } from './services/robot.service';
 
 const PORT = '5050';
-const request = supertest(`http://localhost:${PORT}`);
+const request = supertest(`http://localhost:${PORT}/api`);
 
 test('Room: Should be possible to PUT room', async done => {
   const app = await createApp(PORT);

@@ -1,53 +1,62 @@
+import * as fs from 'fs';
+import * as path from 'path';
+import { replyWithJson } from './lib/request';
+
 import { Server } from './server';
 import { Robot, RobotService } from './services/robot.service';
 import { Room, RoomService } from './services/room.service';
 
 export const roomService = new RoomService();
-export const robotService = new RobotService();
+export const robotService = new RobotService(roomService);
 
 export async function createApp(port = '3030') {
   const server = new Server();
 
-  server.addRoute('robot', 'GET', (req, res) => {
+  server.addRoute('api/robot', 'GET', (req, res) => {
     res.write(JSON.stringify({ message: 'test' }));
     res.statusCode = 200;
     res.end();
   });
 
-  server.addRoute('room', 'PUT', (req, res) => {
+  server.addRoute('api/room', 'PUT', (req, res) => {
     if (!req.body?.width || !req.body?.depth) {
-      res.statusCode = 422;
-      return res.end('Missing width or depth in body');
+      return replyWithJson(res, { message: 'Missing width or depth in body' }, 422);
     }
 
     const updatedRoom = roomService.update(req.body as Room);
-    res.setHeader('Content-Type', 'application/json');
-    res.write(JSON.stringify(updatedRoom));
-    res.end();
+    return replyWithJson(res, updatedRoom);
   });
 
-  server.addRoute('robot', 'PUT', (req, res) => {
+  server.addRoute('api/robot', 'PUT', (req, res) => {
     if (!req.body?.x || !req.body?.y || !req.body?.orientation) {
       res.statusCode = 422;
-      return res.end('Missing x, y or direction in body');
+      return replyWithJson(res, { message: 'Missing x, y or orientation in body' }, 422);
     }
 
     const updatedRobot = robotService.update(req.body as Robot);
-    res.setHeader('Content-Type', 'application/json');
-    res.write(JSON.stringify(updatedRobot));
-    res.end();
+    return replyWithJson(res, updatedRobot);
   });
 
   server.addRoute('api/robot/actions', 'POST', (req, res) => {
     if (!req.body?.type || !req.body?.params) {
       res.statusCode = 422;
-      return res.end('Missing type, params in body');
+      return replyWithJson(res, { message: 'Missing type, params in body' }, 422);
     }
 
     const updatedRobot = robotService.move(req.body.params);
-    res.setHeader('Content-Type', 'application/json');
-    res.write(JSON.stringify(updatedRobot));
-    res.end();
+    return replyWithJson(res, updatedRobot);
+  });
+
+  server.addRoute('public', 'GET', (req, res) => {
+    fs.readFile(path.join(__dirname, req.url!), function (err, data) {
+      if (err) {
+        res.writeHead(404);
+        res.end(JSON.stringify(err));
+        return;
+      }
+      res.writeHead(200);
+      res.end(data);
+    });
   });
 
   server.listen(port);

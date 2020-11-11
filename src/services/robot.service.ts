@@ -63,6 +63,6 @@ export class RobotService {
         }
       }
     }
-    this.update(currentRobot);
+    return this.update(currentRobot);
   }
 }

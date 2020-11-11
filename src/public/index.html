@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="stylesheet.css" />
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+    <title>Robot</title>
+  </head>
+  <body>
+    <h1>The Robot</h1>
+    <div id="forms">
+      <form class="form-grid" id="robot-settings">
+        <label for="grid-size">Grid Size</label>
+        <input id="grid-size" type="number" name="grid-size" placeholder="6" />
+        <label for="start-x">Starting Position (X)</label>
+        <input id="start-x" name="start-x" type="number" placeholder="6" />
+        <label for="start-y">Starting Position (Y)</label>
+        <input id="start-y" type="number" name="start-y" placeholder="3" />
+        <label for="start-orientation">Starting Orientation</label>
+
+        <select name="start-orientation" id="start-orientation">
+          <option value="N">North</option>
+          <option value="E">East</option>
+          <option value="S">South</option>
+          <option value="W">West</option>
+        </select>
+        <span></span>
+        <button id="submit-button">Ok</button>
+      </form>
+
+      <form class="form-grid" id="robot-actions">
+        <label for="move-sequence">Move Sequence</label>
+        <input id="move-sequence" type="text" name="move-sequence" placeholder="RFLFRLF" />
+        <span></span>
+        <button id="submit-button">Move</button>
+      </form>
+    </div>
+
+    <div id="container"></div>
+  </body>
+  <script type="text/javascript" src="utils.js"></script>
+  <script type="text/javascript" src="grid.js"></script>
+</html>

@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,700');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Rubik', sans-serif;
+  font-size: 15px;
+}
+
+body {
+  margin: 3rem;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3em;
+  margin: 1em 0em;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  grid-auto-rows: minmax(25px, 25px);
+  align-items: center;
+  gap: 3px;
+}
+
+#forms {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+#forms > * {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+input {
+  background-color: whitesmoke;
+  border: 1px solid gray;
+  padding: 2px;
+}
+
+label {
+  font-size: 0.9em;
+}
+
+#submit-button {
+  margin-top: 10px;
+  background-color: orange;
+  height: 25px;
+  box-shadow: 1px 2px 2px lightgray;
+  border: none;
+}
+
+#container {
+  display: grid;
+  grid-auto-flow: column;
+  background: black;
+  background-color: white;
+  border: 1px solid black;
+  gap: 1px;
+  margin: 10px 0;
+  height: 50vh;
+}
+
+#container > div {
+  background: white;
+}
+
+.active {
+  height: 50%;
+  width: 50%;
+}
