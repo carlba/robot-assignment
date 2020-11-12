@@ -48,7 +48,7 @@ export class RobotService {
   move(directions: string) {
     const currentRobot = this.get();
     const currentRoom = this.roomService.get();
-    const bbox = new BoundingBox(0, 0, currentRoom.width!, currentRoom.depth!);
+    const bbox = new BoundingBox(0, 0, currentRoom.width! - 1, currentRoom.depth! - 1);
 
     for (const direction of directions) {
       if (direction === 'L') {

@@ -58,17 +58,17 @@ test('Should move the robot forward when heading WEST', async done => {
   done();
 });
 
-test('Should not move the robot forward when hitting room boundary', async done => {
+test('Should not move the robot forward when hitting EAST boundary', async done => {
   const roomService = new RoomService();
   roomService.update({ width: 5, depth: 5 });
   const robotService = new RobotService(roomService);
-  robotService.update({ x: 5, y: 5, orientation: Orientation.EAST });
+  robotService.update({ x: 4, y: 4, orientation: Orientation.EAST });
   robotService.move('F');
-  expect(robotService.get()).toEqual({ x: 5, y: 5, orientation: Orientation.EAST });
+  expect(robotService.get()).toEqual({ x: 4, y: 4, orientation: Orientation.EAST });
   done();
 });
 
-test('Should not move the robot forward when hitting room boundary2', async done => {
+test('Should not move the robot forward when hitting WEST boundary', async done => {
   const roomService = new RoomService();
   roomService.update({ width: 5, depth: 5 });
   const robotService = new RobotService(roomService);
@@ -77,14 +77,25 @@ test('Should not move the robot forward when hitting room boundary2', async done
   expect(robotService.get()).toEqual({ x: 0, y: 0, orientation: Orientation.WEST });
   done();
 });
-
-test('Should not move the robot forward when hitting room boundary3', async done => {
+test('Should not move the robot forward when hitting NORTH boundary', async done => {
   const roomService = new RoomService();
   roomService.update({ width: 5, depth: 5 });
   const robotService = new RobotService(roomService);
   robotService.update({ x: 0, y: 0, orientation: Orientation.NORTH });
   robotService.move('F');
+  console.log('test');
   expect(robotService.get()).toEqual({ x: 0, y: 0, orientation: Orientation.NORTH });
+  done();
+});
+
+test('Should not move the robot forward when hitting SOUTH boundary', async done => {
+  const roomService = new RoomService();
+  roomService.update({ width: 5, depth: 5 });
+  const robotService = new RobotService(roomService);
+  robotService.update({ x: 4, y: 4, orientation: Orientation.SOUTH });
+  robotService.move('F');
+  console.log('test');
+  expect(robotService.get()).toEqual({ x: 4, y: 4, orientation: Orientation.SOUTH });
   done();
 });
 

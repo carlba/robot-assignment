@@ -29,6 +29,6 @@ export class BoundingBox {
   ) {}
 
   inBounds(x: number, y: number) {
-    return x >= this.x && x <= this.width && y >= this.y && x <= this.height;
+    return x >= this.x && x <= this.width && y >= this.y && y <= this.height;
   }
 }
