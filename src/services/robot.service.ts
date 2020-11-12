@@ -25,11 +25,11 @@ export class RobotService {
     return { ...this.robot };
   }
 
-  moveLeft(robot: Robot) {
+  rotateLeft(robot: Robot) {
     robot.orientation = degreesToCardinal(cardinalToDegrees(robot.orientation!) - 90);
   }
 
-  moveRight(robot: Robot) {
+  rotateRight(robot: Robot) {
     robot.orientation = degreesToCardinal(cardinalToDegrees(robot.orientation!) + 90);
   }
 
@@ -52,9 +52,9 @@ export class RobotService {
 
     for (const direction of directions) {
       if (direction === 'L') {
-        this.moveLeft(currentRobot);
+        this.rotateLeft(currentRobot);
       } else if (direction === 'R') {
-        this.moveRight(currentRobot);
+        this.rotateRight(currentRobot);
       } else if (direction === 'F') {
         this.moveForward(currentRobot, bbox);
       }
