@@ -33,8 +33,8 @@ actionsFormElement.addEventListener('submit', async event => {
 
 function generateGrid(size) {
   clearChildren(gridContainer);
-  gridContainer.style.gridTemplateRows = `repeat(${size}, 1fr)`;
-  gridContainer.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+  gridContainer.style.gridTemplateRows = `repeat(${size}, 25px)`;
+  gridContainer.style.gridTemplateColumns = `repeat(${size}, 25px)`;
   gridContainer.style.backgroundColor = `black`;
 
   grid = range(+size).map(x =>

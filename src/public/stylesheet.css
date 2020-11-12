@@ -16,7 +16,6 @@ body {
 }
 
 h1 {
-  text-align: center;
   font-size: 3em;
   margin: 1em 0em;
 }
@@ -31,8 +30,9 @@ h1 {
 
 #forms {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
 #forms > * {
@@ -59,14 +59,13 @@ label {
 }
 
 #container {
-  display: grid;
+  display: inline-grid;
   grid-auto-flow: column;
   background: black;
   background-color: white;
   border: 1px solid black;
   gap: 1px;
-  margin: 10px 0;
-  height: 50vh;
+  margin-top: 15px;
 }
 
 #container > div {
@@ -74,6 +73,6 @@ label {
 }
 
 .active {
-  height: 50%;
-  width: 50%;
+  height: 100%;
+  width: 100%;
 }
