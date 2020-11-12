@@ -2,34 +2,13 @@ const gridContainer = document.getElementById('container');
 const submitButton = document.getElementById('submit-button');
 const settingsFormElement = document.getElementById('robot-settings');
 const actionsFormElement = document.getElementById('robot-actions');
+
+const gridSizeInput = document.getElementById('grid-size');
+const startXInput = document.getElementById('start-x');
+const startYInput = document.getElementById('start-y');
+
 let grid = [];
 let lastFormData = {};
-
-settingsFormElement.addEventListener('submit', async event => {
-  event.preventDefault();
-  const formData = new FormData(event.target);
-  const startX = +formData.get('start-x');
-  const startY = +formData.get('start-y');
-  const startOrientation = formData.get('start-orientation');
-  const gridSize = +formData.get('grid-size');
-
-  if (grid.length === 0 || lastFormData.gridSize !== gridSize) {
-    generateGrid(gridSize);
-  }
-
-  await updateRoom(gridSize, gridSize);
-  await updateRobot(startX, startY, startOrientation);
-  positionRobot(startX, startY, startOrientation);
-  lastFormData = { gridSize };
-});
-
-actionsFormElement.addEventListener('submit', async event => {
-  event.preventDefault();
-  const formData = new FormData(event.target);
-  const moveSequence = formData.get('move-sequence');
-  const result = await moveRobot(moveSequence);
-  positionRobot(result.x, result.y, result.orientation);
-});
 
 function generateGrid(size) {
   clearChildren(gridContainer);
@@ -83,3 +62,41 @@ async function moveRobot(sequence) {
     body: { type: 'move', params: sequence }
   });
 }
+
+settingsFormElement.addEventListener('submit', async event => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const startX = +formData.get('start-x');
+  const startY = +formData.get('start-y');
+  const startOrientation = formData.get('start-orientation');
+  const gridSize = +formData.get('grid-size');
+
+  if (grid.length === 0 || lastFormData.gridSize !== gridSize) {
+    generateGrid(gridSize);
+  }
+
+  await updateRoom(gridSize, gridSize);
+  await updateRobot(startX, startY, startOrientation);
+  positionRobot(startX, startY, startOrientation);
+  lastFormData = { gridSize };
+});
+
+actionsFormElement.addEventListener('submit', async event => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const moveSequence = formData.get('move-sequence');
+  const result = await moveRobot(moveSequence);
+  positionRobot(result.x, result.y, result.orientation);
+});
+
+startXInput.addEventListener('input', event => {
+  if (+startXInput.value > +gridSizeInput.value - 1) {
+    startXInput.setCustomValidity('Position outside grid');
+  }
+});
+
+startYInput.addEventListener('input', event => {
+  if (+startYInput.value > +gridSizeInput.value - 1) {
+    startYInput.setCustomValidity('Position outside grid');
+  }
+});
